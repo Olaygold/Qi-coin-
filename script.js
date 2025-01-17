@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let remainingTime = miningDuration;
 
     // Add your server URL here
-    const serverUrl = "https://your-server-url.com";  // Replace with your actual server URL
+    const serverUrl = "https://qi-coin.onrender.com";  // Replace with your actual server URL
 
     // Fetch user info from server
     fetch(`${serverUrl}/get-user-info`)
