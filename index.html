@@ -317,35 +317,41 @@
     const telegramUserId = "USER_TELEGRAM_ID"; // Replace with dynamic user ID
     const telegramApiUrl = `https://api.telegram.org/bot${telegramBotToken}/getChat?chat_id=${telegramUserId}`;
 
-    fetch(telegramApiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const username = data.result.username;
-            authenticateUser(username);
-        })
-        .catch(error => console.error("Error fetching Telegram username:", error));
+    const telegramBotToken = "7739360079:AAEa9TTmHfdYWvXR7OxnrcF6hAsBiQ7itOw";
+const telegramApiUrl = `https://api.telegram.org/bot${telegramBotToken}/getUpdates`;
 
-    function authenticateUser(username) {
-        const userRef = db.collection("users").doc(username);
+fetch(telegramApiUrl)
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok && data.result.length > 0) {
+            const userId = data.result[0].message.from.id;
+            const username = data.result[0].message.from.username;
+            authenticateUser(userId, username);
+        }
+    })
+    .catch(error => console.error("Error fetching Telegram updates:", error));
 
-        userRef.get().then(doc => {
-            if (doc.exists) {
-                const userData = doc.data();
-                loadUserData(userData);
-            } else {
-                userRef.set({
-                    username: username,
-                    balance: 0,
-                }).then(() => {
-                    loadUserData({ username: username, balance: 0 });
-                });
-            }
-        }).catch(error => console.error("Error fetching user data:", error));
-    }
+function authenticateUser(userId, username) {
+    const userRef = db.collection("users").doc(username);
 
-    function loadUserData(userData) {
-        document.getElementById("username").textContent = userData.username;
-        document.getElementById("balance").textContent = userData.balance.toFixed(4);
+    userRef.get().then(doc => {
+        if (doc.exists) {
+            const userData = doc.data();
+            loadUserData(userData);
+        } else {
+            userRef.set({
+                username: username,
+                balance: 0,
+            }).then(() => {
+                loadUserData({ username: username, balance: 0 });
+            });
+        }
+    }).catch(error => console.error("Error fetching user data:", error));
+}
+
+function loadUserData(userData) {
+    document.getElementById("username").textContent = userData.username;
+    document.getElementById("balance").textContent = userData.balance.toFixed(4);
     }
 </script>
 </body>
