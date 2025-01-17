@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QI World</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+        }
+        .loading-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        .loading-text {
+            font-size: 24px;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .dashboard {
+            display: none;
+            padding: 20px;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 10px 0;
+        }
+        .nav-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .mining-section, .friend-section, .earn-section, .me-section {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .collect-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: green;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .mining-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .bucket {
+            width: 150px;
+            height: 200px;
+            border: 3px solid white;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background-color: #333;
+            margin-bottom: 20px;
+        }
+
+        .fill {
+            width: 100%;
+            height: 0%;
+            background-color: green;
+            position: absolute;
+            bottom: 0;
+            transition: height 0.1s linear;
+        }
+
+        .countdown {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .mining-btn {
+            padding: 10px 20px;
+            background-color: #555;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .mining-btn:hover {
+            background-color: #777;
+        }
+
+        .collect-btn {
+            padding: 10px 20px;
+            background-color: green;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .collect-btn:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen">
+        <span class="loading-text">Welcome to QI World...</span>
+    </div>
+    <div class="dashboard">
+        <h1>Welcome, <span id="username"></span></h1>
+        <h2>Balance: <span id="balance">0</span> QI Tokens</h2>
+        <div class="mining-section active">
+            <h3 style="text-align: center;">Mining</h3>
+            <div class="mining-container">
+                <div class="bucket">
+                    <div class="fill" id="fill"></div>
+                </div>
+                <div class="countdown" id="countdown">3:00:00</div>
+            </div>
+            <div class="mined-tokens" id="mined-tokens">Tokens Mined: 0.0000 QI</div>
+            <button id="start-mining" class="mining-btn">Start Farming</button>
+            <button id="collect-tokens" class="collect-btn" disabled>Collect</button>
+        </div>
+        <div class="friend-section">
+            <h3>Friend</h3>
+            <p>Your referral link: <span id="referral-link"></span></p>
+            <h4>Invited Users:</h4>
+            <ul id="invited-users"></ul>
+        </div>
+        <div class="earn-section">
+            <h3>Earn</h3>
+            <p>Complete tasks to earn tokens!</p>
+            <ul id="tasks"></ul>
+        </div>
+        <div class="me-section">
+            <h3>Me</h3>
+            <p>User Info:</p>
+            <p>Username: <span id="me-username"></span></p>
+            <p>Balance: <span id="me-balance"></span> QI Tokens</p>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <button id="nav-home">Home</button>
+        <button id="nav-friend">Friend</button>
+        <button id="nav-earn">Earn</button>
+        <button id="nav-me">Me</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
