@@ -76,10 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
         countdownElement.textContent = "3:00:00";
         minedTokensElement.textContent = "Tokens Mined: 0.0000 QI";
 
+        // Update the balance on the UI
+        balance += totalTokens;
+        balanceDisplay.textContent = balance.toFixed(4);
+
         // Send updated data to the server (example)
         const updatedData = {
             username: usernameDisplay.textContent,
-            balance: parseFloat(balanceDisplay.textContent) + totalTokens,
+            balance: balance,  // Send the updated balance
         };
         fetch(`${serverUrl}/update-user-info`, {
             method: 'POST',
